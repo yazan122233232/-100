@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>📏👶  مقارنة الطول أو العمر منصنع ✨يزن✨</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap');
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #121212;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+
+    .buttons {
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background-color: #4fc3f7;
+      color: #000;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #29b6f6;
+    }
+
+    .section {
+      display: none;
+      margin-top: 20px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #64b5f6;
+      margin: 10px auto;
+      background: #2a2a2a;
+      color: white;
+      width: 230px;
+      display: block;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .figures {
+      display: flex;
+      justify-content: center;
+      align-items: end;
+      height: 250px;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .figure {
+      width: 70px;
+      background-color: #4fc3f7;
+      border-radius: 10px 10px 0 0;
+      position: relative;
+      transition: height 0.4s ease;
+    }
+
+    .woman {
+      background-color: #f48fb1;
+    }
+
+    .label {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+
+  <h2>👋 اختر نوع المقارنة</h2>
+  <div class="buttons">
+    <button onclick="showSection('height')">📏 مقارنة الطول</button>
+    <button onclick="showSection('age')">👶 مقارنة العمر</button>
+  </div>
+
+  <!-- قسم مقارنة الطول -->
+  <div class="section" id="heightSection">
+    <input type="number" id="manHeight" placeholder="طول الرجل (سم) 👨‍🦱">
+    <input type="number" id="womanHeight" placeholder="طول المرأة (سم) 👩‍🦰">
+    <button onclick="compareHeight()">📊 أظهر الفرق</button>
+    <div class="result" id="heightResult"></div>
+    <div class="figures">
+      <div class="figure" id="manHeightFig">
+        <div class="label">👨‍🦱 رجل</div>
+      </div>
+      <div class="figure woman" id="womanHeightFig">
+        <div class="label">👩‍🦰 امرأة</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- قسم مقارنة العمر -->
+  <div class="section" id="ageSection">
+    <input type="number" id="manAge" placeholder="عمر الرجل (سنة) 👨">
+    <input type="number" id="womanAge" placeholder="عمر المرأة (سنة) 👩">
+    <button onclick="compareAge()">📊 أظهر الفرق</button>
+    <div class="result" id="ageResult"></div>
+    <div class="figures">
+      <div class="figure" id="manAgeFig">
+        <div class="label">👨 رجل</div>
+      </div>
+      <div class="figure woman" id="womanAgeFig">
+        <div class="label">👩 امرأة</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(type) {
+      document.getElementById('heightSection').style.display = 'none';
+      document.getElementById('ageSection').style.display = 'none';
+      if (type === 'height') {
+        document.getElementById('heightSection').style.display = 'block';
+      } else {
+        document.getElementById('ageSection').style.display = 'block';
+      }
+    }
+
+    function compareHeight() {
+      const man = parseInt(document.getElementById('manHeight').value);
+      const woman = parseInt(document.getElementById('womanHeight').value);
+      const maxHeight = 250;
+
+      if (isNaN(man) || isNaN(woman)) return alert("⚠️ يرجى إدخال الطول بشكل صحيح");
+
+      document.getElementById("manHeightFig").style.height = (man / maxHeight * 100) + "%";
+      document.getElementById("womanHeightFig").style.height = (woman / maxHeight * 100) + "%";
+
+      let result = '';
+      if (man > woman) result = `👨‍🦱 الرجل أطول بـ ${man - woman} سم`;
+      else if (woman > man) result = `👩‍🦰 المرأة أطول بـ ${woman - man} سم`;
+      else result = "📏 الطول متساوي";
+
+      document.getElementById('heightResult').textContent = result;
+    }
+
+    function compareAge() {
+      const man = parseInt(document.getElementById('manAge').value);
+      const woman = parseInt(document.getElementById('womanAge').value);
+      const maxAge = 100;
+
+      if (isNaN(man) || isNaN(woman)) return alert("⚠️ يرجى إدخال العمر بشكل صحيح");
+
+      document.getElementById("manAgeFig").style.height = (man / maxAge * 100) + "%";
+      document.getElementById("womanAgeFig").style.height = (woman / maxAge * 100) + "%";
+
+      let result = '';
+      if (man > woman) result = `👨 الرجل أكبر بـ ${man - woman} سنة`;
+      else if (woman > man) result = `👩 المرأة أكبر بـ ${woman - man} سنة`;
+      else result = "🎉 العمر متساوي";
+
+      document.getElementById('ageResult').textContent = result;
+    }
+  </script>
+
+</body>
+        </html>
